@@ -11,13 +11,11 @@ UPLOAD_FOLDER = "./uploads"
 ALLOWED_EXTENSIONS = {"pdf"}
 app = Flask(__name__)
 
-
 class FileStorageArgument(Argument):
     def convert(self, value, op):
         if self.type is FileStorage:
             return value
         super(FileStorageArgument, self).convert(**args, **kwargs)
-
 
 #
 # DataApi
@@ -37,7 +35,8 @@ class DataApi(Resource):
         args = self.parser.parse_args()
         pdfFile = args["file"]
         fileName = pdfFile.filename
-        if pdfFile and allowed_file(fileName):
+        
+        if pdfFile and self.allowed_file(fileName):
             filename = secure_filename(pdfFile.filename)
             pdfFile.save(os.path.join(app.root_path, UPLOAD_FOLDER, filename))
             return ". success"
