@@ -1,9 +1,10 @@
 import tabula
 from tabula import convert_into
-from PyPDF2 import PdfFileReader
+from PyPDF2 import PdfReader
 import pandas as pd
 import re
 import json
+import os
 
 regex = "[+-]?[0-9]+\.[0-9]+"
 # Define a function to
@@ -18,10 +19,10 @@ def check(floatnum):
 
 
 # Read pdf into list of DataFrame
-filename = "statement.pdf"
+filename = "pdf_reader/statement.pdf"
 df = tabula.read_pdf(filename, pages="all")
-pdf = PdfFileReader(open(filename, "rb"))
-pages = pdf.getNumPages()
+pdf = PdfReader(open(filename, "rb"))
+pages = len(pdf.pages)
 test_area = [388, 59, 638, 567]
 test_area1 = [130, 59, 721, 567]
 
